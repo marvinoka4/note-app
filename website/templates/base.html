@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}My NoteApp{% endblock %}</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon/favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/colors/grape.css') }}">
@@ -22,7 +22,7 @@
           <div class="container flex-lg-row flex-nowrap align-items-center">
             <div class="navbar-brand w-100">
               <a href="/">
-                <img src="{{ url_for('static', filename='img/logo-dark.png') }}"  alt="" />
+                <img src="{{ url_for('static', filename='img/dragon-lord-logo.svg') }}"  alt="" width="150px"/>
               </a>
             </div>
 
@@ -166,7 +166,7 @@
           <div class=" row gy-6 gy-lg-0">
         <div class="col-md-4 col-lg-3">
           <div class="widget">
-            <img class="mb-4" src="{{ url_for('static', filename='img/logo-dark.png') }}" alt="" />
+            <img class="mb-4" src="{{ url_for('static', filename='img/dragon-lord-logo.svg') }}" alt="" width="150px"/>
             <p class="mb-4">© 2023 Sandbox. <br class="d-none d-lg-block" />All rights reserved.</p>
             <nav class="nav social ">
               <a href="#"><i class="uil uil-twitter"></i></a>
