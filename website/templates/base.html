@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}My NoteApp{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/colors/grape.css') }}">
+    <link type="text/css" rel="preload" href="{{ url_for('static', filename='css/fonts/urbanist.css') }}" as="style" onload="this.rel='stylesheet'">
+</head>
+<body>
+
+    <div class="content-wrapper">
+
+      <header class="wrapper">
+
+        <nav class="navbar navbar-expand-lg center-nav transparent navbar-light caret-none">
+          <div class="container flex-lg-row flex-nowrap align-items-center">
+            <div class="navbar-brand w-100">
+              <a href="/">
+                <img src="{{ url_for('static', filename='img/logo-dark.png') }}"  alt="" />
+              </a>
+            </div>
+
+            <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+              <div class="offcanvas-header d-lg-none">
+                <h3 class="text-white fs-30 mb-0">Note App</h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+
+              <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
+                <ul class="navbar-nav">
+                  {% if user.is_authenticated %}
+                  <li class="nav-link nav-item" id="note-app"><a href="/note-app">Note App</a>
+                  <li class="nav-link nav-item" id="about"><a href="/about">About</a>
+                  <li class="nav-link nav-item" id="blog"><a href="/blog">Blog</a>
+                  <li class="nav-link nav-item" id="contact"><a href="/contact">Contact</a>
+                  {% else %}
+                  <li class="nav-link nav-item" id="about"><a href="/about">About</a>
+                  <li class="nav-link nav-item" id="blog"><a href="/blog">Blog</a>
+                  <li class="nav-link nav-item" id="contact"><a href="/contact">Contact</a>
+                  {% endif %}
+                </ul>
+                <!-- /.navbar-nav -->
+                <div class="offcanvas-footer d-lg-none">
+                  <div>
+                    <a href="mailto:first.last@email.com" class="link-inverse">info@email.com</a>
+                    <br /> 00 (123) 456 78 90 <br />
+                    <nav class="nav social social-white mt-4">
+                      {% if user.is_authenticated %}
+                      <a href="/logout" title="Log Out"><i class="uil uil-user-times"></i></i></i></a>
+                      {% else %}
+                      <a href="/sign-up" title="Sign Up"><i class="uil uil-user-plus"></i></i></a>
+                      <a href="/login" title="Log In"><i class="uil uil-user-check"></i></i></a>
+                      {% endif %}
+                    </nav>
+                    <!-- /.social -->
+                  </div>
+                </div>
+                <!-- /.offcanvas-footer -->
+              </div>
+              <!-- /.offcanvas-body -->
+            </div>
+            <!-- /.navbar-collapse -->
+            <div class="navbar-other w-100 d-flex ms-auto">
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item">
+                  <nav class="nav social social-muted justify-content-end text-end">
+                    {% if user.is_authenticated %}
+                    <a href="/logout" title="Log Out"><i class="uil uil-user-times"></i></i></i></a>
+                    {% else %}
+                    <a href="/sign-up" title="Sign Up"><i class="uil uil-user-plus"></i></i></a>
+                    <a href="/login" title="Log In"><i class="uil uil-user-check"></i></i></a>
+                    {% endif %}
+                  </nav>
+                  <!-- /.social -->
+                </li>
+                <li class="nav-item d-lg-none">
+                  <button class="hamburger offcanvas-nav-btn"><span></span></button>
+                </li>
+              </ul>
+              <!-- /.navbar-nav -->
+            </div>
+            <!-- /.navbar-other -->
+          </div>
+          <!-- /.container -->
+        </nav>
+        <!-- /.navbar -->
+        <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
+          <div class="container d-flex flex-row py-6">
+            <form class="search-form w-100">
+              <input id="search-form" type="text" class="form-control" placeholder="Type keyword and hit enter">
+            </form>
+            <!-- /.search-form -->
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <!-- /.container -->
+        </div>
+        <!-- /.offcanvas -->
+
+        <div class="container">
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          {% if category == 'error' %}
+          <div class="alert alert-danger alert-icon alert-dismissible fade show" role="alert">
+            <i class="uil uil-times-circle"></i> <a href="#" class="alert-link hover"> {{ message }} </a>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% else %}
+          <div class="alert alert-success alert-icon alert-dismissible fade show" role="alert">
+            <i class="uil uil-check-circle"></i> <a href="#" class="alert-link hover"> {{ message }} </a>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+        </div>
+
+      </header>
+      <!-- /header -->
+
+      <div>
+
+      {% block content %}
+      {% endblock %}
+
+      </div>
+
+    </div>
+
+
+    <!-- /.content-wrapper -->
+    <footer class="bg-light">
+      <div class="container-card">
+        <div class="card image-wrapper bg-full bg-image bg-overlay bg-overlay-light-500 mb-14" data-image-src="{{ url_for('static', filename='img/photos/bg22.png') }}">
+          <div class="card-body py-14 px-0">
+            <div class="container">
+              <div class="row text-center">
+                <div class="col-xl-11 col-xxl-9 mx-auto">
+                  <h2 class="fs-16 text-uppercase text-gradient gradient-1 mb-3">Join Our Community</h2>
+                  <h3 class="display-4 mb-7 px-lg-17">We are trusted by over 5000+ clients. Join them now and grow your business.</h3>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+              <div class="d-flex justify-content-center">
+                <span><a class="btn btn-lg btn-gradient gradient-1 rounded">Get Started</a></span>
+              </div>
+            </div>
+            <!--/.container -->
+          </div>
+          <!--/.card-body -->
+        </div>
+        <!--/.card -->
+      </div>
+      <!-- /.container-card -->
+      <div class="container pb-13 pb-md-15">
+          <div class=" row gy-6 gy-lg-0">
+        <div class="col-md-4 col-lg-3">
+          <div class="widget">
+            <img class="mb-4" src="{{ url_for('static', filename='img/logo-dark.png') }}" alt="" />
+            <p class="mb-4">© 2023 Sandbox. <br class="d-none d-lg-block" />All rights reserved.</p>
+            <nav class="nav social ">
+              <a href="#"><i class="uil uil-twitter"></i></a>
+              <a href="#"><i class="uil uil-facebook-f"></i></a>
+              <a href="#"><i class="uil uil-dribbble"></i></a>
+              <a href="#"><i class="uil uil-instagram"></i></a>
+              <a href="#"><i class="uil uil-youtube"></i></a>
+            </nav>
+            <!-- /.social -->
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /column -->
+        <div class="col-md-4 col-lg-3">
+          <div class="widget">
+            <h4 class="widget-title  mb-3">Get in Touch</h4>
+            <address class="pe-xl-15 pe-xxl-17">Moonshine St. 14/05 Light City, London, United Kingdom</address>
+            <a href="mailto:#" class="link-body">info@email.com</a><br /> 00 (123) 456 78 90
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /column -->
+        <div class="col-md-4 col-lg-3">
+          <div class="widget">
+            <h4 class="widget-title  mb-3">Learn More</h4>
+            <ul class="list-unstyled text-reset mb-0">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Projects</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /column -->
+        <div class="col-md-12 col-lg-3">
+          <div class="widget">
+            <h4 class="widget-title  mb-3">Our Newsletter</h4>
+            <p class="mb-5">Subscribe to our newsletter to get our news & deals delivered to you.</p>
+            <div class="newsletter-wrapper">
+              <!-- Begin Mailchimp Signup Form -->
+              <div id="mc_embed_signup2">
+                <form action="#" method="post" id="mc-embedded-subscribe-form2" name="mc-embedded-subscribe-form" class="validate " target="_blank" novalidate>
+                  <div id="mc_embed_signup_scroll2">
+                    <div class="mc-field-group input-group form-floating">
+                      <input type="email" value="" name="EMAIL" class="required email form-control" placeholder="Email Address" id="mce-EMAIL2">
+                      <label for="mce-EMAIL2">Email Address</label>
+                      <input type="submit" value="Join" name="subscribe" id="mc-embedded-subscribe2" class="btn btn-primary btn-gradient gradient-1">
+                    </div>
+                    <div id="mce-responses2" class="clear">
+                      <div class="response" id="mce-error-response2" style="display:none"></div>
+                      <div class="response" id="mce-success-response2" style="display:none"></div>
+                    </div> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ddc180777a163e0f9f66ee014_4b1bcfa0bc" tabindex="-1" value=""></div>
+                    <div class="clear"></div>
+                  </div>
+                </form>
+              </div>
+              <!--End mc_embed_signup-->
+            </div>
+            <!-- /.newsletter-wrapper -->
+          </div>
+          <!-- /.widget -->
+        </div>
+        <!-- /column -->
+      </div>
+      <!--/.row -->
+      </div>
+    </footer>
+
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
